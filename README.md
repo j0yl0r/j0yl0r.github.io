@@ -1,2 +1,2 @@
-# j0yl0r.github.io
+# joylor.github.io
 My portfolio
