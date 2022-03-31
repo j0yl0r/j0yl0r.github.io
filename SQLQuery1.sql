@@ -43,8 +43,6 @@ group by location
 order by totalDeathCount DESC
 
 
--- LET"S BREAK THINGS DOWN BY CONTINENT
-
 --Showing the continents with highest death counts per population
 
 Select continent, MAX(cast(total_deaths as int)) AS totalDeathCount
@@ -75,16 +73,14 @@ where continent is not null
 order by 1, 2
 
 
-
 --COVID VACCINATIONS
 select * 
 from portfolio_project..Covid_Vaccinations
 order by 3,4
 
 
---join tables
---looking total population vs vaccination
 
+--Joining tables and looking at the total population vs vaccination
 -- USE CTE
 
 with popvsVac (continent, location, date, population, new_vaccinations, RollingPeopleVacinated)
@@ -106,7 +102,6 @@ from popvsVac
 
 --TEMP TABLE
 DROP TABLE if exists #PercentPopulationVaccinated
-
 Create Table #PercentPopulationVaccinated
 (
 continent nvarchar(225),
@@ -126,9 +121,7 @@ from portfolio_project..Covid_Deaths dea
 join portfolio_project..Covid_Vaccinations vac
 	on dea.location = vac.location
 	and dea.date = vac.date
---where dea.continent is not null
---order by 2, 3
-
+	
 Select *, ((RollingPeopleVaccinated/population) *100) AS percentage
 from #PercentPopulationVaccinated
 
@@ -145,7 +138,6 @@ join portfolio_project..Covid_Vaccinations vac
 	on dea.location = vac.location
 	and dea.date = vac.date
 where dea.continent is not null
---order by 2, 3
 
 Select * 
 from #PercentPopulationVaccinated
